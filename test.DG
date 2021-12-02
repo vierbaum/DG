@@ -1,4 +1,2 @@
-v a 35
-v b 149
-!= a b < a b v c o % b a
-p c
+v a 2
+l 0,10,1 i v a o * a 2&p i 0&p a 0

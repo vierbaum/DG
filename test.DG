@@ -1,0 +1,4 @@
+v a 35
+v b 149
+!= a b < a b v c o % b a
+p c

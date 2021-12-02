@@ -1,2 +1,1 @@
-v a 2
-l 0,10,1 i v a o * a 2&p i 0&p a 0
+l 1,10000,1 i&v a o / 1 i&v b o + a 1&v c o ^ b i&p c 0

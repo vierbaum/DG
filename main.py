@@ -21,28 +21,17 @@ def dec_num(num):
         return vars[1][vars[0].index(num)]
 
 def write_to_var(params):
-    if params[1] in vars[0]:
+    if params[2] == "[]":
+        vars[0].append(params[1])
+        vars[1].append([])
+
+    elif params[1] in vars[0]:
         vars[1][vars[0].index(params[1])] = dec_num(params[2])
     else:
         vars[0].append(params[1])
-        vars[1].append(float(params[2]))
+        vars[1].append(dec_num(params[2]))
 
 def operate(params):
-    if params[0] == "+":
-        print(dec_num(params[1]) + dec_num(params[2]))
-
-    if params[0] == "-":
-        print(dec_num(params[1]) - dec_num(params[2]))
-
-    if params[0] == "*":
-        print(dec_num(params[1]) * dec_num(params[2]))
-
-    if params[0] == "/":
-        print(dec_num(params[1]) / dec_num(params[2]))
-
-    if params[0] == "%":
-        print(dec_num(params[1]) % dec_num(params[2]))
-
     if params[0] == "v":
         if params[2] == "o":
             if params[3] == "+":
@@ -63,6 +52,9 @@ def operate(params):
             if params[3] == "^":
                 write_to_var([0, params[1], (dec_num(params[4]) ** dec_num(params[5]))])
 
+            if params[3] == "g":
+                write_to_var([0, params[1], vars[1][vars[0].index(params[4])][int(dec_num(params[5]))]])
+
         else:
             write_to_var(params)
 
@@ -81,8 +73,6 @@ def operate(params):
             for l in range(len(new_code) - 1):
                 operate(new_code[l + 1])
 
-
-
     if params[0] == "<":
         if dec_num(params[1]) < dec_num(params[2]):
             operate(params[(3 - len(params)):])
@@ -95,21 +85,25 @@ def operate(params):
         if dec_num(params[1]) == dec_num(params[2]):
             operate(params[(3 - len(params)):])
 
-    if params[0] == "!=":
+    if params[0] == "!":
         if dec_num(params[1]) != dec_num(params[2]):
             operate(params[(3 - len(params)):])
 
+    if params[0] == "a":
+        vars[1][vars[0].index(params[1])].append(dec_num(params[2]))
+
+    if params[0] == "g":
+        print(vars[1][vars[0].index(params[1])][int(dec_num(params[2]))])
+
+    if params[0] == "s":
+        index_val = params[2].split(",")
+        vars[1][vars[0].index(params[1])][int(index_val[0])] = dec_num(index_val[1])
+
 for line in Lines:
     if line.strip()[0] == "l":
-
-        operate(line.strip())
-        try:
-            pass
-        except:
-            IndexError
+        code = line.strip()
     else:
-        try:
-            code = line.strip().split(" ")
-            operate(code)
-        except:
-            IndexError
+        code = line.strip().split(" ")
+    operate(code)
+
+print(vars)

@@ -1,1 +1,11 @@
-l 1,10000,1 i&v a o / 1 i&v b o + a 1&v c o ^ b i&p c 0
+v a 15
+v b []
+a b 12
+a b a
+v c 0
+g b c
+g b 1
+v d 0
+v d o g b 1
+p d
+s b 0,1.2

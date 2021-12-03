@@ -2,7 +2,7 @@ v a 15
 v b []
 a b 12
 g b 0
-;
+; this is a comment
 a b a
 v c 0
 g b c

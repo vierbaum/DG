@@ -3,15 +3,19 @@ import re
 import numpy
 
 vars = [[], []]
+
 parse = argparse.ArgumentParser()
 parse.add_argument("-s")
 Lines = open(parse.parse_args().s, 'r').readlines()
 
 def dec_num(num):
+    try:
+        return float(num)
+    except:
+        ValueError
+
     if num in vars[0]:
         return vars[1][vars[0].index(num)]
-    else:
-        return float(num)
 
 def write_to_var(params):
     if params[2] == "[]":
@@ -52,7 +56,11 @@ def operate(params):
             write_to_var(params)
 
     if params[0] == "p":
+        print("here")
+        print([dec_num(x) for x in params[2].split(",")])
         print(params[1].format(*[dec_num(x) for x in params[2].split(",")]))
+#        print(params[1].format(dec_num))
+#        print(dec_num(params[1]))
 
     if params[0] == "g":
         print(vars[1][vars[0].index(params[1])][int(dec_num(params[2]))])
@@ -97,6 +105,9 @@ for line in Lines:
         pass
     elif line.strip()[0] == "l":
         code = line.strip()
+
     else:
-        code = [i for i in re.split(r' |(?<=")(.*)(?=")', line.strip()) if i != "\"" and i != None]
+        code = re.split(r' |(?<=")(.*)(?=")', line.strip())
+        code.remove('"')
+        print("CODE", code)
     operate(code)

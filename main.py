@@ -58,45 +58,30 @@ def operate(params):
         print(vars[1][vars[0].index(params[1])][int(dec_num(params[2]))])
 
     if params[0] == "l":
-        progs = params.split("&")
+
         new_code = []
-        for i in progs:
-            new_code.append(i.split(" "))
-        var = new_code[0][1].split(",")
+        for line in params.split("&"): new_code.append([i for i in re.split(r' |(?<=")(.*)(?=")', line.strip()) if i != "\"" and i != None])
 
-        for i in range(int(var[0]), int(var[1]), int(var[2])):
+        for i in range(int(new_code[0][1].split(",")[0]), int(new_code[0][1].split(",")[1]), int(new_code[0][1].split(",")[2])):
             write_to_var([0, new_code[0][2], i])
-            for l in range(len(new_code) - 1):
-                operate(new_code[l + 1])
+            for l in range(len(new_code) - 1): operate(new_code[l + 1])
 
-    if params[0] == "<":
-        if dec_num(params[1]) < dec_num(params[2]):
+    if params[0] == "<" and dec_num(params[1]) < dec_num(params[2]):
+        operate(params[(3 - len(params)):])
+
+    if params[0] == ">" and dec_num(params[1]) > dec_num(params[2]):
             operate(params[(3 - len(params)):])
 
-    if params[0] == ">":
-        if dec_num(params[1]) > dec_num(params[2]):
-            operate(params[(3 - len(params)):])
+    if params[0] == "=" and dec_num(params[1]) == dec_num(params[2]):
+        operate(params[(3 - len(params)):])
 
-    if params[0] == "=":
-        if dec_num(params[1]) == dec_num(params[2]):
-            operate(params[(3 - len(params)):])
-
-    if params[0] == "!":
-        if dec_num(params[1]) != dec_num(params[2]):
+    if params[0] == "!" and dec_num(params[1]) != dec_num(params[2]):
             operate(params[(3 - len(params)):])
 
     if params[0] == "a":
         vars[1][vars[0].index(params[1])].append(dec_num(params[2]))
 
     if params[0] == "s":
-        index_val = params[2].split(",")
-        vars[1][vars[0].index(params[1])][int(index_val[0])] = dec_num(index_val[1])
+        vars[1][vars[0].index(params[1])][int(params[2].split(",")[0])] = dec_num(params[2].split(",")[1])
 
-for line in Lines:
-    if line.strip()[0] == ";":
-        pass
-    elif line.strip()[0] == "l":
-        code = line.strip()
-    else:
-        code = [i for i in re.split(r' |(?<=")(.*)(?=")', line.strip()) if i != "\"" and i != None]
-    operate(code)
+for line in Lines: operate(line.strip()) if line.strip()[0] == "l" else operate([i for i in re.split(r' |(?<=")(.*)(?=")', line.strip()) if i != "\"" and i != None])

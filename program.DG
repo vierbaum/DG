@@ -1,4 +1,4 @@
 ;l 1,1000000,1 i&v a o / 1 i&v a o + a 1&v a o ^ a i&p "e: {}" a
-l 1,5,1 i&l 1,5,1 a&p "a: {}, i: {}" a,i
-v a o + 1 2
-p "{}" a
+;l 1,5,1 i&l 1,5,1 a&p "a: {}, i: {}" a,i
+v x 15
+p "{} test {}" x,2

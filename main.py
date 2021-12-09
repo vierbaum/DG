@@ -34,9 +34,9 @@ def operate(params):
             write_to_var(params)
 
     if params[0] == "l":
-        for i in range(int(dec_num([params[0:params.index("&")].split(" "), params[params.index("&") + 1:]][0][1].split(",")[0])), int(dec_num([params[0:params.index("&")].split(" "), params[params.index("&") + 1:]][0][1].split(",")[1])), int(dec_num([params[0:params.index("&")].split(" "), params[params.index("&") + 1:]][0][1].split(",")[2]))):
-            write_to_var([0, [params[0:params.index("&")].split(" "), params[params.index("&") + 1:]][0][2], i])
-            operate([params[0:params.index("&")].split(" "), params[params.index("&") + 1:]][1]) if [params[0:params.index("&")].split(" "), params[params.index("&") + 1:]][1][0] == "l" else [operate([i for i in re.split(r' |(?<=")(.*)(?=")', j) if i != "\"" and i != None]) for j in [params[0:params.index("&")].split(" "), params[params.index("&") + 1:]][1].split("&")]
+        for i in range(int(dec_num(params[0:params.index("&")].split(" ")[1].split(",")[0])), int(dec_num(params[0:params.index("&")].split(" ")[1].split(",")[1])), int(dec_num(params[0:params.index("&")].split(" ")[1].split(",")[2]))):
+            write_to_var([0, params[0:params.index("&")].split(" ")[2], i])
+            operate(params[params.index("&") + 1:]) if params[params.index("&") + 1:][0] == "l" else [operate([i for i in re.split(r' |(?<=")(.*)(?=")', j) if i != "\"" and i != None]) for j in params[params.index("&") + 1:].split("&")]
 
     if params[0] == "<" and dec_num(params[1]) < dec_num(params[2]): operate(params[(3 - len(params)):])
     if params[0] == ">" and dec_num(params[1]) > dec_num(params[2]): operate(params[(3 - len(params)):])

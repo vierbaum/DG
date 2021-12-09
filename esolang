@@ -1,0 +1,42 @@
+DG (named after a great computer-science teacher) is a language designed with principles known from lisp.
+All programms are written in normal text-files.
+
+== Basic syntax ==
+DG is interpreted line by line, meaning that one line doesn't affect another (besides variables).
+Every line is structured like this:
+ operator parameter1 parameter2
+From this it becomes clear, that every operator takes in exactly 2 parameters, which in some cases can be extended.
+All parameters are seperated using spaces (" ").
+When more than 2 parameters are required, parameters are connected through ",".
+DG also doesn't have infix-operators.
+
+== Operators ==
+ + | adds 2 parameters (numbers or variables) together (+ 4 5) and writes them to a variable
+ - | subtracts 2 parameters (numbers or variables) (- 4 5) and writes them to a variable
+ * | multiplies 2 parameters (numbers or variables) (* 4 5) and writes them to a variable
+ / | devides 2 parameters (numbers or variables) together (/ 4 5) and writes them to a variable
+ ^ | raises 2 parameters (numbers or variables) to eachothers power (^ 4 5) and writes them to a variable
+ % | takes the modulo of 2 parameters (numbers or variables) (% 5 4) and writes them to a variable
+ v | sets a variable to a value (v a 5 sets a to 5 and v b a sets b to a(5))
+   | when the second parameter is "o" the variable is set to the output of an operation (v a o + 4 b sets a to 4 + b) (takes +-*/%g)
+   | when the second parameter is "[]" an array is created (v b [])
+ a | append a value to an array (a b 12 sets b = [12])
+ s | sets the element at an index to a value (let b = [4, 5, 7]; v b 0,15 sets b = [15, 5, 7])
+ g | prints element of array at index (g b 0 prints b[0] (in this case 4))
+ p | prints a string with variables (p "test {} {}" a,4 prints "test a 4")
+ ; | comment (start line with ; (; I'm a comment))
+ > | executes code if condition is true ( > a 1 v b o / 1 a sets b to 1 / a, if a > 1)
+ < | executes code if condition is true ( < a 1 v b o / 1 a sets b to 1 / a, if a < 1)
+ = | executes code if condition is true ( = a 1 v b o / 1 a sets b to 1 / a, if a == 1)
+ ! | executes code if condition is true ( ! a 1 v b o / 1 a sets b to 1 / a, if a != 1)
+ l | for-loop (l 1,10,2 i&v b o * i 2&p "i: {} b: {}" i,b (for i from 1 to nine, 1,3,5,7,9 prints i and 2 * i))
+   | ''do not put spaces befor or after the "&''
+
+== Example: calculating e ==
+The following code approximates e for (1 + 1/n)^n
+ l 1,1000000,1 i&v a o / 1 i&v a o + a 1&v a o ^ a i&p "e: {}" a
+
+== External recources ==
+Github: [https://github.com/vierbaum/DG]
+
+[[Category:Languages]]
